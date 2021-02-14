@@ -9,6 +9,7 @@ docker-compose build
 docker-compose up
 docker-compose exec app
 cd src
+./docker-compose.ymlのdbコンテナを参照しながらsrc/.envを編集する
 php artisan migrate
 npm install
 npm run dev
