@@ -7,7 +7,7 @@
 https://github.com/MasanaIto/kashikari.git
 docker-compose build
 docker-compose up
-docker-compose exec app
+docker-compose exec app bash
 cd src
 ./docker-compose.ymlのdbコンテナを参照しながらsrc/.envを編集する
 php artisan migrate
