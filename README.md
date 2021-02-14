@@ -4,6 +4,7 @@
 # Installation
 
 ```bash
+https://github.com/MasanaIto/kashikari.git
 docker-compose build
 docker-compose up
 docker-compose exec app
