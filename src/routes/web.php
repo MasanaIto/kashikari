@@ -1,4 +1,4 @@
 <?php
 
 Auth::routes();
-Route::get('/', 'ArticleController@index');
+Route::get('/home', 'ArticleController@index');
