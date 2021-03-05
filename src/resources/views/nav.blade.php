@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand navbar-dark purple">
 
-    <a class="navbar-brand" href="/"><i class="fas fa-hands-helping"></i>カシカリ</a>
+    <a class="navbar-brand" href="/home"><i class="fas fa-hands-helping"></i>カシカリ</a>
 
     <ul class="navbar-nav ml-auto">
 
@@ -18,7 +18,7 @@
 
         @auth
         <li class="nav-item">
-            <a class="nav-link" href=""><i class="fas fa-pen mr-1"></i>追加する</a>
+            <a class="nav-link" href="{{ route('articles.create') }}"><i class="fas fa-pen mr-1"></i>追加する</a>
         </li>
         @endauth
 

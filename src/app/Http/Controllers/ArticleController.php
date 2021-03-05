@@ -2,73 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
+use App\Http\Requests\ArticleRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
     public function index()
     {
-        // ダミーデータ
-        $articles = [
-            (object)[
-                'article_id' => 1,
-                'article_name' => '簿記検定の本',
-                'description' => '次2級借りる',
-                'lender' => (object)[
-                    'user_id' => 1,
-                    'user_name' => 'zzzheng',
-                    'nickname' => 'masana',
-                ],
-                'borrower' => (object)[
-                    'user_id' => 2,
-                    'user_name' => 'tarotaro',
-                    'nickname' => 'taro',
-                ],
-                'deadline' => '2021/03/23',
-                'status' => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            (object)[
-                'article_id' => 2,
-                'article_name' => 'ラスアス2',
-                'description' => 'クリアして返す',
-                'lender' => (object)[
-                    'user_id' => 2,
-                    'user_name' => 'tarotaro',
-                    'nickname' => 'taro',
-                ],
-                'borrower' => (object)[
-                    'user_id' => 1,
-                    'user_name' => 'zzzheng',
-                    'nickname' => 'masana',
-                ],
-                'deadline' => '2021/03/25',
-                'status' => 0,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            (object)[
-                'article_id' => 3,
-                'article_name' => 'インフラの教科書',
-                'description' => '',
-                'lender' => (object)[
-                    'user_id' => 1,
-                    'user_name' => 'zzzheng',
-                    'nickname' => 'masana',
-                ],
-                'borrower' => (object)[
-                    'user_id' => 3,
-                    'user_name' => 'yokoyoko',
-                    'nickname' => 'yoko',
-                ],
-                'deadline' => '2021/03/20',
-                'status' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ];
+        $articles = Article::all()->sortByDesc('created_at');
 
         return view('articles.index')->with(['articles' => $articles]);
+    }
+
+    public function create()
+    {
+        return view('articles.create');
+    }
+
+    /**
+     * @param ArticleRequest $request
+     * @param Article $article
+     * @return RedirectResponse
+     */
+    public function store(ArticleRequest $request, Article $article): RedirectResponse
+    {
+        // lent or borrowed
+        $transaction = $request->transaction;
+
+        if ($transaction === "lent") {
+            // 自分が貸したモノだった場合
+            $article->lender_id = $request->user()->id;
+            $article->borrower_id = $request->partner;
+        } else {
+            // 相手から借りたモノだった場合
+            $article->lender_id = $request->partner;
+            $article->borrower_id = $request->user()->id;
+        }
+
+        $article->article_name = $request->article_name;
+        $article->deadline = $request->deadline;
+        $article->description = $request->description;
+
+        $article->save();
+        return redirect()->route('articles.index');
     }
 }
