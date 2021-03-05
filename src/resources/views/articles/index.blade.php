@@ -11,7 +11,7 @@
                 <i class="fas fa-user-circle fa-3x mr-1"></i>
                 <div>
                     <div class="font-weight-bold">
-                        貸した人 {{ $article->lender->nickname }} → 借りた人 {{ $article->borrower->nickname }}
+                        貸した人 {{ $article->lender_id }} → 借りた人 {{ $article->borrower_id }}
                     </div>
                     <div class="font-weight-lighter">
                         返却期限：{{ $article->deadline }}
