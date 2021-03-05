@@ -20,7 +20,7 @@ class CreateArticlesTable extends Migration
             $table->string('article_name');
             $table->string('description')->nullable();
             $table->boolean('status')->default(0);
-            $table->time('deadline')->nullable();
+            $table->date('deadline')->nullable();
             $table->timestamps();
         });
     }
