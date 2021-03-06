@@ -24,7 +24,7 @@
 
         @auth
         <li class="nav-item">
-            <a class="nav-link" href=""><i class="fas fa-user-plus"></i></a>
+            <a class="nav-link" href="{{ route('user_search.index') }}"><i class="fas fa-user-plus"></i></a>
         </li>
         @endauth
 
